@@ -22,7 +22,7 @@ import {
 	FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { CardWarpper } from './card-wrapper';
+import { CardWrapper } from './card-wrapper';
 
 export const RegisterForm = () => {
 	const [error, setError] = useState<string | undefined>('');
@@ -56,7 +56,7 @@ export const RegisterForm = () => {
 	};
 
 	return (
-		<CardWarpper
+		<CardWrapper
 			headerLabel="Create an account"
 			backButtonHref="/auth/login"
 			backButtonLabel="Already have an Account?"
@@ -114,7 +114,7 @@ export const RegisterForm = () => {
 										<Input
 											{...field}
 											disabled={isPending}
-											placeholder="*******"
+											placeholder="•••••••••"
 											type="password"
 											autoComplete="current-password"
 										/>
@@ -141,6 +141,6 @@ export const RegisterForm = () => {
 					</Button>
 				</form>
 			</Form>
-		</CardWarpper>
+		</CardWrapper>
 	);
 };

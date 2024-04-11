@@ -1,9 +1,11 @@
 'use server';
 
+import { sendVerificationEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/tokens';
 import { LoginSchema } from '@/schema';
 import { signIn, signOut } from '@/server/auth';
 import { getUserByEmail } from '@/server/db/query/user';
+import { error } from 'console';
 import { AuthError } from 'next-auth';
 import { z } from 'zod';
 
@@ -25,7 +27,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 		const verificationToken = await generateVerificationToken(
 			existingUser.email,
 		);
-		return { success: 'Email is not verified. Check your Inbox' };
+		if (verificationToken) {
+			await sendVerificationEmail(
+				verificationToken.email,
+				verificationToken.token,
+			);
+			return { success: 'Email is not verified. Check your Inbox' };
+		} else {
+			return { error: 'Something went wrong' };
+		}
 	}
 
 	try {

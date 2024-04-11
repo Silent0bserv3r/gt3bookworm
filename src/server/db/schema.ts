@@ -108,7 +108,20 @@ export const verificationTokens = pgTable(
 		id: uuid('id').notNull().defaultRandom(),
 		email: varchar('email', { length: 255 }).notNull(),
 		token: varchar('token', { length: 255 }).notNull().unique(),
-		expires: timestamp('expires', { mode: 'date' }),
+		expires: timestamp('expires', { mode: 'date' }).notNull(),
+	},
+	(token) => ({
+		compoundKey: primaryKey({ columns: [token.email, token.token] }),
+	}),
+);
+
+export const passwordResetTokens = pgTable(
+	'passwordresettoken',
+	{
+		id: uuid('id').notNull().defaultRandom(),
+		email: varchar('email', { length: 255 }).notNull(),
+		token: varchar('token', { length: 255 }).notNull().unique(),
+		expires: timestamp('expires', { mode: 'date' }).notNull(),
 	},
 	(token) => ({
 		compoundKey: primaryKey({ columns: [token.email, token.token] }),

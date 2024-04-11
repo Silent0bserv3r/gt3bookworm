@@ -37,10 +37,15 @@ export const deleteVerficationTokenById = async (id: string) => {
 	}
 };
 
-type NewUser = typeof verificationTokens.$inferInsert;
-export const createNewVerificationToken = async (tokenParams: NewUser) => {
+type VerificationTokenParams = typeof verificationTokens.$inferInsert;
+export const createNewVerificationToken = async (
+	tokenParams: VerificationTokenParams,
+) => {
 	try {
-		return await db.insert(verificationTokens).values(tokenParams);
+		return await db
+			.insert(verificationTokens)
+			.values(tokenParams)
+			.returning();
 	} catch (_error) {
 		return null;
 	}

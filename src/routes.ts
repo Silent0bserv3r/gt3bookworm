@@ -2,7 +2,7 @@
  * An array of roytes that are accessible to public.
  * These routes do not require authentication
  */
-export const publicRoutes: string[] = ['/'];
+export const publicRoutes: string[] = ['/', '/auth/verify-email'];
 
 /**
  * An array of roytes that are used for user authentication.
@@ -12,6 +12,7 @@ export const authRoutes: string[] = [
 	'/auth/login',
 	'/auth/register',
 	'/auth/error',
+	'/auth/reset',
 ];
 
 /**
