@@ -25,10 +25,11 @@ import { CardWrapper } from './card-wrapper';
 
 export const LoginForm = () => {
 	const searchParams = useSearchParams();
-	const urlError =
-		searchParams.get('error') === 'OAuthAccountNotLinked'
-			? 'Email already in use'
-			: '';
+	var urlError = '';
+	if (searchParams.get('error') === 'OAuthAccountNotLinked')
+		urlError = 'Email already in use';
+	if (searchParams.get('error') === 'OAuthCallbackError')
+		urlError = 'Sign In cancelled';
 
 	const [error, setError] = useState<string | undefined>('');
 	const [success, setSuccess] = useState<string | undefined>('');

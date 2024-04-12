@@ -1,7 +1,7 @@
 'use client';
 
 import { reset } from '@/actions/reset';
-import { ResetSchema } from '@/schema';
+import { NewPasswordSchema } from '@/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,28 +21,29 @@ import {
 import { Input } from '../ui/input';
 import { CardWrapper } from './card-wrapper';
 
-export const ResetForm = () => {
+export const NewPasswordForm = () => {
 	const [error, setError] = useState<string | undefined>('');
 	const [success, setSuccess] = useState<string | undefined>('');
 	const [isPending, startTransition] = useTransition();
 
-	const form = useForm<z.infer<typeof ResetSchema>>({
-		resolver: zodResolver(ResetSchema),
+	const form = useForm<z.infer<typeof NewPasswordSchema>>({
+		resolver: zodResolver(NewPasswordSchema),
 		defaultValues: {
-			email: '',
+			password: '',
+			confirmPassword: '',
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+	const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
 		setError('');
 		setSuccess('');
 
-		startTransition(() => {
-			reset(values).then((data) => {
-				setError(data?.error);
-				setSuccess(data?.success);
-			});
-		});
+		// startTransition(() => {
+		// 	reset(values).then((data) => {
+		// 		setError(data?.error);
+		// 		setSuccess(data?.success);
+		// 	});
+		// });
 
 		form.reset();
 	};
@@ -61,17 +62,36 @@ export const ResetForm = () => {
 					<div className="space-y-4">
 						<FormField
 							control={form.control}
-							name="email"
+							name="password"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Email</FormLabel>
+									<FormLabel>Password</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
 											disabled={isPending}
-											placeholder="john.doe@example.com"
-											type="email"
-											autoComplete="username"
+											placeholder="•••••••••"
+											type="password"
+											autoComplete="off"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="confirmPassword"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Confirm Password</FormLabel>
+									<FormControl>
+										<Input
+											{...field}
+											disabled={isPending}
+											placeholder="•••••••••"
+											type="password"
+											autoComplete="off"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -86,7 +106,7 @@ export const ResetForm = () => {
 						type="submit"
 						disabled={isPending}
 					>
-						Send Reset Mail
+						Reset Password
 					</Button>
 				</form>
 			</Form>

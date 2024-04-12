@@ -13,11 +13,11 @@ import {
 } from '@react-email/components';
 import React from 'react';
 
-const EmailVerificationTemplate = (confirmLink: string) => {
+const PasswordResetTemplate = (confirmLink: string) => {
 	return (
 		<Html>
 			<Head />
-			<Preview>Verify Your Email with bookworm</Preview>
+			<Preview>Reset Your Password: Bookworm</Preview>
 			<Body style={main}>
 				<Container style={container}>
 					<Section style={box}>
@@ -33,21 +33,18 @@ const EmailVerificationTemplate = (confirmLink: string) => {
 							BookWorm
 						</Heading>
 						<Text style={paragraph}>
-							Thanks for submitting your info. Before you log in
-							you need to verify your email, so we can be sure you
-							have a verified email.
-						</Text>
-						<Text style={paragraph}>
-							You can get access to our protected services after
-							verifying your email.
+							We got a request to reset your account password.
+							Click on the link below to continue with password
+							reset.
 						</Text>
 						<Button style={button} href={confirmLink}>
 							Verify your email
 						</Button>
 						<Hr style={hr} />
 						<Text style={paragraph}>
-							If you haven't signed up, you can ignore this email.
-							This verification email expires in an hour.
+							If not requested by you we recommend deleting this
+							email and reporting this to our customer support.
+							This link will expire in 15 mins.
 						</Text>
 						<Text style={paragraph}>— The Bookworm team</Text>
 					</Section>
@@ -57,7 +54,7 @@ const EmailVerificationTemplate = (confirmLink: string) => {
 	);
 };
 
-export default EmailVerificationTemplate;
+export default PasswordResetTemplate;
 
 const main = {
 	backgroundColor: '#f6f9fc',
