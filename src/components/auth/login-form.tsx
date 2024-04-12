@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { FormError } from '../general/form-error';
 import { FormSuccess } from '../general/form-success';
@@ -25,7 +25,7 @@ import { CardWrapper } from './card-wrapper';
 
 export const LoginForm = () => {
 	const searchParams = useSearchParams();
-	var urlError = '';
+	let urlError = '';
 	if (searchParams.get('error') === 'OAuthAccountNotLinked')
 		urlError = 'Email already in use';
 	if (searchParams.get('error') === 'OAuthCallbackError')

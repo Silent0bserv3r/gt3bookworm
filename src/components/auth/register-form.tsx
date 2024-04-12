@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { LiaSpinnerSolid } from 'react-icons/lia';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { FormError } from '../general/form-error';
 import { FormSuccess } from '../general/form-success';

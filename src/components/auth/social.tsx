@@ -8,7 +8,7 @@ import { Separator } from '../ui/separator';
 
 export const Social = () => {
 	const login = async (provider: 'google' | 'github') => {
-		signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
+		await signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
 	};
 	return (
 		<div className="flex w-full flex-col space-y-4">
