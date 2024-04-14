@@ -7,7 +7,7 @@ import { db } from '@/server/db';
 import { getUserByEmail } from '@/server/db/query/user';
 import { users } from '@/server/db/schema';
 import bcrypt from 'bcryptjs';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -30,12 +30,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		return { error: 'Something went wrong. Try again' };
 	}
 
-	const verficationToken = await generateVerificationToken(email);
+	const verificationToken = await generateVerificationToken(email);
 
-	if (verficationToken) {
+	if (verificationToken) {
 		await sendVerificationEmail(
-			verficationToken.email,
-			verficationToken.token,
+			verificationToken.email,
+			verificationToken.token,
 		);
 	} else {
 		return { error: 'Something went wrong. Try again' };

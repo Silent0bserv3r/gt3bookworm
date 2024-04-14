@@ -1,12 +1,14 @@
 'use client';
 
 import { login } from '@/actions/login';
+import { cn } from '@/lib/utils';
 import { LoginSchema } from '@/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
+import { LiaSpinnerSolid } from 'react-icons/lia';
 import { type z } from 'zod';
 
 import { FormError } from '../general/form-error';
@@ -48,10 +50,14 @@ export const LoginForm = () => {
 		setSuccess('');
 
 		startTransition(() => {
-			login(values).then((data) => {
-				setError(data?.error);
-				setSuccess(data?.success);
-			});
+			login(values)
+				.then((data) => {
+					setError(data?.error);
+					setSuccess(data?.success);
+				})
+				.catch(() => {
+					setError('Oops! Something went wrong');
+				});
 		});
 
 		// form.reset();
@@ -109,7 +115,7 @@ export const LoginForm = () => {
 										variant={'link'}
 										className="px-0 font-normal"
 									>
-										<Link href="/auth/reset">
+										<Link href={'/auth/reset'}>
 											Forgot Password?
 										</Link>
 									</Button>
@@ -118,14 +124,20 @@ export const LoginForm = () => {
 							)}
 						/>
 					</div>
-					<FormError message={error || urlError} />
+					<FormError message={error ?? urlError} />
 					<FormSuccess message={success} />
 					<Button
-						className="w-full"
+						className="flex w-full items-center gap-x-1"
 						type="submit"
 						disabled={isPending}
 					>
-						Sign In
+						<LiaSpinnerSolid
+							className={cn(
+								'hidden animate-spin',
+								isPending && 'flex',
+							)}
+						/>
+						<h1>Sign In</h1>
 					</Button>
 				</form>
 			</Form>

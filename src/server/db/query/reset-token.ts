@@ -30,16 +30,6 @@ export const getResetTokenByEmail = async (email: string) => {
 	}
 };
 
-export const deleteResetTokenById = async (id: string) => {
-	try {
-		await db
-			.delete(passwordResetTokens)
-			.where(eq(passwordResetTokens.id, id));
-	} catch (_error) {
-		return null;
-	}
-};
-
 type ResetTokenParams = typeof passwordResetTokens.$inferInsert;
 export const createNewResetToken = async (tokenParams: ResetTokenParams) => {
 	try {

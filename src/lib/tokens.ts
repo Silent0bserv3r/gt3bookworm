@@ -1,7 +1,10 @@
-import { getResetTokenByEmail } from '@/server/db/query/reset-token';
+import {
+	createNewResetToken,
+	getResetTokenByEmail,
+} from '@/server/db/query/reset-token';
 import {
 	createNewVerificationToken,
-	deleteVerficationTokenById,
+	deleteVerificationTokenById,
 	getVerificationTokenByEmail,
 } from '@/server/db/query/verification-token';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,10 +16,10 @@ export const generatePasswordResetToken = async (email: string) => {
 	const existingToken = await getResetTokenByEmail(email);
 
 	if (existingToken) {
-		await deleteVerficationTokenById(existingToken.id);
+		await deleteVerificationTokenById(existingToken.id);
 	}
 
-	const newToken = await createNewVerificationToken({
+	const newToken = await createNewResetToken({
 		email,
 		token,
 		expires,
@@ -33,7 +36,7 @@ export const generateVerificationToken = async (email: string) => {
 	const existingToken = await getVerificationTokenByEmail(email);
 
 	if (existingToken) {
-		await deleteVerficationTokenById(existingToken.id);
+		await deleteVerificationTokenById(existingToken.id);
 	}
 
 	const newToken = await createNewVerificationToken({

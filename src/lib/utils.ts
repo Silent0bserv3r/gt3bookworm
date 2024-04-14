@@ -12,3 +12,11 @@ export function resolveInXSeconds(x: number): Promise<void> {
 		}, x * 1000);
 	});
 }
+
+export async function dbCall(callback: () => Promise<void>) {
+	try {
+		await callback();
+	} catch {
+		return { error: 'Oops! something went wrong' };
+	}
+}

@@ -1,8 +1,9 @@
 'use client';
 
-import { reset } from '@/actions/reset';
+import { newPassword } from '@/actions/new-password';
 import { NewPasswordSchema } from '@/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { type z } from 'zod';
@@ -22,6 +23,9 @@ import { Input } from '../ui/input';
 import { CardWrapper } from './card-wrapper';
 
 export const NewPasswordForm = () => {
+	const searchParams = useSearchParams();
+	const token = searchParams.get('token');
+
 	const [error, setError] = useState<string | undefined>('');
 	const [success, setSuccess] = useState<string | undefined>('');
 	const [isPending, startTransition] = useTransition();
@@ -38,12 +42,14 @@ export const NewPasswordForm = () => {
 		setError('');
 		setSuccess('');
 
-		// startTransition(() => {
-		// 	reset(values).then((data) => {
-		// 		setError(data?.error);
-		// 		setSuccess(data?.success);
-		// 	});
-		// });
+		startTransition(() => {
+			newPassword(values, token)
+				.then((data) => {
+					setError(data?.error);
+					setSuccess(data?.success);
+				})
+				.catch(() => setError('Oops! something went wrong'));
+		});
 
 		form.reset();
 	};

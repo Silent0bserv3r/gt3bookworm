@@ -27,7 +27,7 @@ export const getVerificationTokenByToken = async (token: string) => {
 	}
 };
 
-export const deleteVerficationTokenById = async (id: string) => {
+export const deleteVerificationTokenById = async (id: string) => {
 	try {
 		await db
 			.delete(verificationTokens)
